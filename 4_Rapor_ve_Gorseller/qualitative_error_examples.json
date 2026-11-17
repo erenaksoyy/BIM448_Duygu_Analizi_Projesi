@@ -1,0 +1,48 @@
+{
+  "en_neg_vader_pos": {
+    "id": 5,
+    "place_name": "Earnest Bar & Hideaway",
+    "rating": 1,
+    "text": "Server was very slow to get a drink, front of house staff barely cared if a customer was present. Not a welcoming restaurant. Menu limited, food just ok. We had a filet and the fried chicken. Many other restaurants in Nashville much better.",
+    "true_label": "Negative",
+    "vader_compound": 0.2734,
+    "vader_pred": "Positive",
+    "bert_pred": "Negative",
+    "llm_pred": "Negative"
+  },
+  "en_neu_vader_pos": {
+    "id": 3,
+    "place_name": "Andale Latino Grill",
+    "rating": 3,
+    "text": "Food was mediocre, nothing stands out. Reasonably priced, though. Friendly service.",
+    "true_label": "Neutral",
+    "vader_compound": 0.4939,
+    "vader_pred": "Positive",
+    "bert_pred": "Neutral",
+    "llm_pred": "Neutral"
+  },
+  "tr_neg_vader_pos": {
+    "id": 9,
+    "place_name": "İstanbul Büyükşehir Belediyesi Çamlıca Sosyal Tesisleri",
+    "rating": 1,
+    "text": "Hizmet ne hizmeti sayısını sayamadım garson var hepsi ruhsuz ayakta uyurgezerler yemek dediğin sıfır yemeği geri gönderdik çoban kavurma sebze sıfır et boyutunu tarif edemem şef garson kibardı sağolsun özür diledi bir çorba gönderdi çorbayı içtik paramızı ödeyip çıktık ama bir daha orda yemek yemem...",
+    "translated_text": "I couldn't count the number of service, there were waiters, they were all soulless, sleepwalkers, we sent back the zero food you call food, shepherd's roasted vegetables, zero meat, I can't describe the size, the head waiter was polite, thank you, he apologized, he sent us a soup, we drank the soup, paid our money and left, but I will never eat there again...",
+    "true_label": "Negative",
+    "vader_compound": 0.3158,
+    "vader_pred": "Positive",
+    "bert_pred": "Negative",
+    "llm_pred": "Negative"
+  },
+  "tr_neu_llm_correct": {
+    "id": 19,
+    "place_name": "Afiyet Et Kasap&Izgara",
+    "rating": 3,
+    "text": "Ucuz ama eti kaliteli değil,yol üstü kolay ulaşım karışık ortam",
+    "translated_text": "Cheap but not of high quality meat, easy transportation on the road, mixed environment",
+    "true_label": "Neutral",
+    "vader_compound": 0.5927,
+    "vader_pred": "Positive",
+    "bert_pred": "Negative",
+    "llm_pred": "Neutral"
+  }
+}

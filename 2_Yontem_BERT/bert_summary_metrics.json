@@ -1,0 +1,184 @@
+{
+  "english_bert": {
+    "title": "İNGİLİZCE VERİ SETİ - BERT TABANLI DUYGU ANALİZİ SONUÇLARI (9.000 Yorum)",
+    "model_name": "gohbwj/sentiment-fine-tuned-yelp-3L",
+    "accuracy": 0.8096,
+    "macro_f1": 0.8111,
+    "total_samples": 9000,
+    "total_correct": 7286,
+    "total_wrong": 1714,
+    "class_errors": {
+      "Positive": {
+        "total": 3000,
+        "correct": 2613,
+        "wrong": 387,
+        "error_rate_pct": 12.9,
+        "misclassified_as": {
+          "Neutral": 371,
+          "Negative": 16
+        }
+      },
+      "Neutral": {
+        "total": 3000,
+        "correct": 2288,
+        "wrong": 712,
+        "error_rate_pct": 23.73,
+        "misclassified_as": {
+          "Positive": 320,
+          "Negative": 392
+        }
+      },
+      "Negative": {
+        "total": 3000,
+        "correct": 2385,
+        "wrong": 615,
+        "error_rate_pct": 20.5,
+        "misclassified_as": {
+          "Positive": 13,
+          "Neutral": 602
+        }
+      }
+    },
+    "classification_report": {
+      "Positive": {
+        "precision": 0.8869653767820774,
+        "recall": 0.871,
+        "f1-score": 0.8789101917255298,
+        "support": 3000.0
+      },
+      "Neutral": {
+        "precision": 0.7016252683226004,
+        "recall": 0.7626666666666667,
+        "f1-score": 0.7308736623542565,
+        "support": 3000.0
+      },
+      "Negative": {
+        "precision": 0.8539205155746509,
+        "recall": 0.795,
+        "f1-score": 0.8234075608493009,
+        "support": 3000.0
+      },
+      "accuracy": 0.8095555555555556,
+      "macro avg": {
+        "precision": 0.8141703868931095,
+        "recall": 0.8095555555555555,
+        "f1-score": 0.8110638049763623,
+        "support": 9000.0
+      },
+      "weighted avg": {
+        "precision": 0.8141703868931096,
+        "recall": 0.8095555555555556,
+        "f1-score": 0.8110638049763624,
+        "support": 9000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        2613,
+        371,
+        16
+      ],
+      [
+        320,
+        2288,
+        392
+      ],
+      [
+        13,
+        602,
+        2385
+      ]
+    ]
+  },
+  "turkish_bert": {
+    "title": "TÜRKÇE VERİ SETİ - BERTurk TABANLI DUYGU ANALİZİ SONUÇLARI (9.000 Yorum)",
+    "model_name": "incidelen/bert-base-turkish-sentiment-analysis-cased",
+    "accuracy": 0.7211,
+    "macro_f1": 0.7118,
+    "total_samples": 9000,
+    "total_correct": 6490,
+    "total_wrong": 2510,
+    "class_errors": {
+      "Positive": {
+        "total": 3000,
+        "correct": 2366,
+        "wrong": 634,
+        "error_rate_pct": 21.13,
+        "misclassified_as": {
+          "Neutral": 478,
+          "Negative": 156
+        }
+      },
+      "Neutral": {
+        "total": 3000,
+        "correct": 1353,
+        "wrong": 1647,
+        "error_rate_pct": 54.9,
+        "misclassified_as": {
+          "Positive": 180,
+          "Negative": 1467
+        }
+      },
+      "Negative": {
+        "total": 3000,
+        "correct": 2771,
+        "wrong": 229,
+        "error_rate_pct": 7.63,
+        "misclassified_as": {
+          "Positive": 47,
+          "Neutral": 182
+        }
+      }
+    },
+    "classification_report": {
+      "Positive": {
+        "precision": 0.9124566139606634,
+        "recall": 0.7886666666666666,
+        "f1-score": 0.8460575719649562,
+        "support": 3000.0
+      },
+      "Neutral": {
+        "precision": 0.6721311475409836,
+        "recall": 0.451,
+        "f1-score": 0.5397965290245362,
+        "support": 3000.0
+      },
+      "Negative": {
+        "precision": 0.630632680928539,
+        "recall": 0.9236666666666666,
+        "f1-score": 0.7495266432242359,
+        "support": 3000.0
+      },
+      "accuracy": 0.7211111111111111,
+      "macro avg": {
+        "precision": 0.7384068141433954,
+        "recall": 0.721111111111111,
+        "f1-score": 0.7117935814045762,
+        "support": 9000.0
+      },
+      "weighted avg": {
+        "precision": 0.7384068141433954,
+        "recall": 0.7211111111111111,
+        "f1-score": 0.711793581404576,
+        "support": 9000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        2366,
+        478,
+        156
+      ],
+      [
+        180,
+        1353,
+        1467
+      ],
+      [
+        47,
+        182,
+        2771
+      ]
+    ]
+  }
+}

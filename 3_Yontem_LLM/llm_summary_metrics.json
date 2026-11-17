@@ -1,0 +1,184 @@
+{
+  "english_llm": {
+    "title": "İNGİLİZCE VERİ SETİ - LLM TABANLI DUYGU ANALİZİ SONUÇLARI (9.000 Yorum)",
+    "model_name": "qwen3.8-flash-next",
+    "accuracy": 0.8363,
+    "macro_f1": 0.833,
+    "total_samples": 9000,
+    "total_correct": 7527,
+    "total_wrong": 1473,
+    "class_errors": {
+      "Positive": {
+        "total": 3000,
+        "correct": 2848,
+        "wrong": 152,
+        "error_rate_pct": 5.07,
+        "misclassified_as": {
+          "Neutral": 147,
+          "Negative": 5
+        }
+      },
+      "Neutral": {
+        "total": 3000,
+        "correct": 2074,
+        "wrong": 926,
+        "error_rate_pct": 30.87,
+        "misclassified_as": {
+          "Positive": 495,
+          "Negative": 431
+        }
+      },
+      "Negative": {
+        "total": 3000,
+        "correct": 2605,
+        "wrong": 395,
+        "error_rate_pct": 13.17,
+        "misclassified_as": {
+          "Positive": 5,
+          "Neutral": 390
+        }
+      }
+    },
+    "classification_report": {
+      "Positive": {
+        "precision": 0.8506571087216248,
+        "recall": 0.9493333333333334,
+        "f1-score": 0.8972904851921865,
+        "support": 3000.0
+      },
+      "Neutral": {
+        "precision": 0.7943316736882421,
+        "recall": 0.6913333333333334,
+        "f1-score": 0.7392621636072001,
+        "support": 3000.0
+      },
+      "Negative": {
+        "precision": 0.856626109832292,
+        "recall": 0.8683333333333333,
+        "f1-score": 0.8624399933785797,
+        "support": 3000.0
+      },
+      "accuracy": 0.8363333333333334,
+      "macro avg": {
+        "precision": 0.8338716307473862,
+        "recall": 0.8363333333333333,
+        "f1-score": 0.8329975473926554,
+        "support": 9000.0
+      },
+      "weighted avg": {
+        "precision": 0.8338716307473863,
+        "recall": 0.8363333333333334,
+        "f1-score": 0.8329975473926554,
+        "support": 9000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        2848,
+        147,
+        5
+      ],
+      [
+        495,
+        2074,
+        431
+      ],
+      [
+        5,
+        390,
+        2605
+      ]
+    ]
+  },
+  "turkish_llm": {
+    "title": "TÜRKÇE VERİ SETİ - LLM TABANLI DUYGU ANALİZİ SONUÇLARI (9.000 Yorum)",
+    "model_name": "qwen3.8-flash-next",
+    "accuracy": 0.7911,
+    "macro_f1": 0.7865,
+    "total_samples": 9000,
+    "total_correct": 7120,
+    "total_wrong": 1880,
+    "class_errors": {
+      "Positive": {
+        "total": 3000,
+        "correct": 2688,
+        "wrong": 312,
+        "error_rate_pct": 10.4,
+        "misclassified_as": {
+          "Neutral": 296,
+          "Negative": 16
+        }
+      },
+      "Neutral": {
+        "total": 3000,
+        "correct": 1776,
+        "wrong": 1224,
+        "error_rate_pct": 40.8,
+        "misclassified_as": {
+          "Positive": 249,
+          "Negative": 975
+        }
+      },
+      "Negative": {
+        "total": 3000,
+        "correct": 2656,
+        "wrong": 344,
+        "error_rate_pct": 11.47,
+        "misclassified_as": {
+          "Positive": 36,
+          "Neutral": 308
+        }
+      }
+    },
+    "classification_report": {
+      "Positive": {
+        "precision": 0.9041372351160444,
+        "recall": 0.896,
+        "f1-score": 0.9000502260170768,
+        "support": 3000.0
+      },
+      "Neutral": {
+        "precision": 0.746218487394958,
+        "recall": 0.592,
+        "f1-score": 0.6602230483271375,
+        "support": 3000.0
+      },
+      "Negative": {
+        "precision": 0.7282698108034,
+        "recall": 0.8853333333333333,
+        "f1-score": 0.7991575146682715,
+        "support": 3000.0
+      },
+      "accuracy": 0.7911111111111111,
+      "macro avg": {
+        "precision": 0.7928751777714674,
+        "recall": 0.791111111111111,
+        "f1-score": 0.7864769296708287,
+        "support": 9000.0
+      },
+      "weighted avg": {
+        "precision": 0.7928751777714674,
+        "recall": 0.7911111111111111,
+        "f1-score": 0.7864769296708286,
+        "support": 9000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        2688,
+        296,
+        16
+      ],
+      [
+        249,
+        1776,
+        975
+      ],
+      [
+        36,
+        308,
+        2656
+      ]
+    ]
+  }
+}

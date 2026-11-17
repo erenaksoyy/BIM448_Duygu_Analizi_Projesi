@@ -1,0 +1,269 @@
+{
+  "english_vader": {
+    "title": "İNGİLİZCE VERİ SETİ - VADER SONUÇLARI (9.000 Yorum)",
+    "accuracy": 0.5153,
+    "total_samples": 9000,
+    "total_correct": 4638,
+    "total_wrong": 4362,
+    "class_errors": {
+      "Positive": {
+        "total": 3000,
+        "correct": 2936,
+        "wrong": 64,
+        "error_rate_pct": 2.13,
+        "misclassified_as": {
+          "Neutral": 20,
+          "Negative": 44
+        }
+      },
+      "Neutral": {
+        "total": 3000,
+        "correct": 79,
+        "wrong": 2921,
+        "error_rate_pct": 97.37,
+        "misclassified_as": {
+          "Positive": 2447,
+          "Negative": 474
+        }
+      },
+      "Negative": {
+        "total": 3000,
+        "correct": 1623,
+        "wrong": 1377,
+        "error_rate_pct": 45.9,
+        "misclassified_as": {
+          "Positive": 1247,
+          "Neutral": 130
+        }
+      }
+    },
+    "classification_report": {
+      "Positive": {
+        "precision": 0.44283559577677223,
+        "recall": 0.9786666666666667,
+        "f1-score": 0.6097611630321911,
+        "support": 3000.0
+      },
+      "Neutral": {
+        "precision": 0.34497816593886466,
+        "recall": 0.026333333333333334,
+        "f1-score": 0.04893155775781976,
+        "support": 3000.0
+      },
+      "Negative": {
+        "precision": 0.7580569827183559,
+        "recall": 0.541,
+        "f1-score": 0.6313946702976074,
+        "support": 3000.0
+      },
+      "accuracy": 0.5153333333333333,
+      "macro avg": {
+        "precision": 0.5152902481446643,
+        "recall": 0.5153333333333334,
+        "f1-score": 0.4300291303625394,
+        "support": 9000.0
+      },
+      "weighted avg": {
+        "precision": 0.5152902481446642,
+        "recall": 0.5153333333333333,
+        "f1-score": 0.4300291303625394,
+        "support": 9000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        2936,
+        20,
+        44
+      ],
+      [
+        2447,
+        79,
+        474
+      ],
+      [
+        1247,
+        130,
+        1623
+      ]
+    ]
+  },
+  "turkish_vader_raw": {
+    "title": "TÜRKÇE VERİ SETİ - ÇEVİRİSİZ (HAM) VADER SONUÇLARI (9.000 Yorum)",
+    "accuracy": 0.3537,
+    "total_samples": 9000,
+    "total_correct": 3183,
+    "total_wrong": 5817,
+    "class_errors": {
+      "Positive": {
+        "total": 3000,
+        "correct": 331,
+        "wrong": 2669,
+        "error_rate_pct": 88.97,
+        "misclassified_as": {
+          "Neutral": 2652,
+          "Negative": 17
+        }
+      },
+      "Neutral": {
+        "total": 3000,
+        "correct": 2818,
+        "wrong": 182,
+        "error_rate_pct": 6.07,
+        "misclassified_as": {
+          "Positive": 143,
+          "Negative": 39
+        }
+      },
+      "Negative": {
+        "total": 3000,
+        "correct": 34,
+        "wrong": 2966,
+        "error_rate_pct": 98.87,
+        "misclassified_as": {
+          "Positive": 125,
+          "Neutral": 2841
+        }
+      }
+    },
+    "classification_report": {
+      "Positive": {
+        "precision": 0.5525876460767947,
+        "recall": 0.11033333333333334,
+        "f1-score": 0.18393998332870243,
+        "support": 3000.0
+      },
+      "Neutral": {
+        "precision": 0.3390687041270605,
+        "recall": 0.9393333333333334,
+        "f1-score": 0.4982760144991601,
+        "support": 3000.0
+      },
+      "Negative": {
+        "precision": 0.37777777777777777,
+        "recall": 0.011333333333333334,
+        "f1-score": 0.022006472491909384,
+        "support": 3000.0
+      },
+      "accuracy": 0.3536666666666667,
+      "macro avg": {
+        "precision": 0.423144709327211,
+        "recall": 0.35366666666666674,
+        "f1-score": 0.23474082343992397,
+        "support": 9000.0
+      },
+      "weighted avg": {
+        "precision": 0.423144709327211,
+        "recall": 0.3536666666666667,
+        "f1-score": 0.23474082343992395,
+        "support": 9000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        331,
+        2652,
+        17
+      ],
+      [
+        143,
+        2818,
+        39
+      ],
+      [
+        125,
+        2841,
+        34
+      ]
+    ]
+  },
+  "turkish_vader_translated": {
+    "title": "TÜRKÇE VERİ SETİ - İNGİLİZCEYE ÇEVRİLMİŞ VADER SONUÇLARI (9.000 Yorum)",
+    "accuracy": 0.5418,
+    "total_samples": 9000,
+    "total_correct": 4876,
+    "total_wrong": 4124,
+    "class_errors": {
+      "Positive": {
+        "total": 3000,
+        "correct": 2834,
+        "wrong": 166,
+        "error_rate_pct": 5.53,
+        "misclassified_as": {
+          "Neutral": 94,
+          "Negative": 72
+        }
+      },
+      "Neutral": {
+        "total": 3000,
+        "correct": 320,
+        "wrong": 2680,
+        "error_rate_pct": 89.33,
+        "misclassified_as": {
+          "Positive": 1831,
+          "Negative": 849
+        }
+      },
+      "Negative": {
+        "total": 3000,
+        "correct": 1722,
+        "wrong": 1278,
+        "error_rate_pct": 42.6,
+        "misclassified_as": {
+          "Positive": 988,
+          "Neutral": 290
+        }
+      }
+    },
+    "classification_report": {
+      "Positive": {
+        "precision": 0.501326729170352,
+        "recall": 0.9446666666666667,
+        "f1-score": 0.6550329365537964,
+        "support": 3000.0
+      },
+      "Neutral": {
+        "precision": 0.45454545454545453,
+        "recall": 0.10666666666666667,
+        "f1-score": 0.17278617710583152,
+        "support": 3000.0
+      },
+      "Negative": {
+        "precision": 0.6515323496027242,
+        "recall": 0.574,
+        "f1-score": 0.6103136629452419,
+        "support": 3000.0
+      },
+      "accuracy": 0.5417777777777778,
+      "macro avg": {
+        "precision": 0.535801511106177,
+        "recall": 0.5417777777777778,
+        "f1-score": 0.47937759220162324,
+        "support": 9000.0
+      },
+      "weighted avg": {
+        "precision": 0.5358015111061769,
+        "recall": 0.5417777777777778,
+        "f1-score": 0.4793775922016233,
+        "support": 9000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        2834,
+        94,
+        72
+      ],
+      [
+        1831,
+        320,
+        849
+      ],
+      [
+        988,
+        290,
+        1722
+      ]
+    ]
+  }
+}
