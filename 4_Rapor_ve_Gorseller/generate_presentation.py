@@ -203,7 +203,7 @@ def build_presentation() -> None:
     bg1.fill.fore_color.rgb = COLOR_NAVY_DARK
     bg1.line.fill.background()
 
-    tb1 = s1.shapes.add_textbox(Inches(1.0), Inches(1.2), Inches(11.3), Inches(5.2))
+    tb1 = s1.shapes.add_textbox(Inches(1.0), Inches(0.85), Inches(11.3), Inches(5.8))
     tf1 = tb1.text_frame
     tf1.word_wrap = True
 
@@ -212,24 +212,38 @@ def build_presentation() -> None:
     p_uni.font.size = Pt(16)
     p_uni.font.bold = True
     p_uni.font.color.rgb = RGBColor(147, 197, 253)
-    p_uni.space_after = Pt(24)
+    p_uni.space_after = Pt(20)
 
     p_main = tf1.add_paragraph()
     p_main.text = "Karşılaştırmalı Duygu Analizi (Sentiment Analysis):\nİngilizce ve Türkçe Mekan Yorumları Üzerinde\nVADER, BERT ve LLM Yöntemlerinin İncelenmesi"
-    p_main.font.size = Pt(34)
+    p_main.font.size = Pt(32)
     p_main.font.bold = True
     p_main.font.color.rgb = COLOR_WHITE
-    p_main.space_after = Pt(28)
+    p_main.space_after = Pt(22)
+
+    p_authors_title = tf1.add_paragraph()
+    p_authors_title.text = "Hazırlayanlar:"
+    p_authors_title.font.size = Pt(18)
+    p_authors_title.font.bold = True
+    p_authors_title.font.color.rgb = RGBColor(96, 165, 250)
+    p_authors_title.space_after = Pt(6)
+
+    p_authors = tf1.add_paragraph()
+    p_authors.text = (
+        "•  Eren Aksoy — 202403011009\n"
+        "•  Emre Kayıkcı — 202403011068"
+    )
+    p_authors.font.size = Pt(17)
+    p_authors.font.bold = True
+    p_authors.font.color.rgb = COLOR_WHITE
+    p_authors.space_after = Pt(20)
 
     p_meta = tf1.add_paragraph()
     p_meta.text = (
         "• Veri Ölçeği: 9.000 İngilizce + 9.000 Türkçe = 18.000 Gerçek Restoran & Kafe Yorumu\n"
-        "• İncelenen Yöntemler:\n"
-        "   1) VADER Sentiment Analysis (Kural ve Sözlük Tabanlı Yaklaşım)\n"
-        "   2) BERT & BERTurk (Derin Öğrenme / Transformer Encoder Yaklaşımı)\n"
-        "   3) Büyük Dil Modeli – EVREN API Qwen3.8-Flash-Next (İstem Mühendisliği Yaklaşımı)"
+        "• İncelenen Yöntemler: 1) VADER (Kural Tabanlı)   2) BERT & BERTurk (Derin Öğrenme)   3) EVREN LLM (Qwen3.8-Flash-Next)"
     )
-    p_meta.font.size = Pt(16)
+    p_meta.font.size = Pt(15)
     p_meta.font.color.rgb = RGBColor(203, 213, 225)
 
     add_speaker_notes(

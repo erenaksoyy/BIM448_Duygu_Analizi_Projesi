@@ -1,5 +1,9 @@
 # BİM448 Veri Madenciliği ve Bilgi Keşfi — Karşılaştırmalı Duygu Analizi (Sentiment Analysis)
 
+**Hazırlayanlar:**
+* **Eren Aksoy** — `202403011009`
+* **Emre Kayıkcı** — `202403011068`
+
 Bu proje, **Doğuş Üniversitesi Bilgisayar Mühendisliği Bölümü BİM448 Veri Madenciliği ve Bilgi Keşfi** dersi kapsamında; geleneksel/kural tabanlı (**VADER**), derin öğrenme tabanlı (**BERT / BERTurk**) ve Büyük Dil Modeli tabanlı (**LLM – EVREN API `qwen3.8-flash-next`**) duygu analizi yöntemlerinin başarımını **9.000 İngilizce** ve **9.000 Türkçe** (toplam **18.000**) gerçek restoran ve kafe yorumu üzerinde karşılaştırmalı olarak incelemektedir.
 
 ---

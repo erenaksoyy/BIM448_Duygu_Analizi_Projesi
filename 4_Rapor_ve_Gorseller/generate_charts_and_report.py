@@ -417,8 +417,8 @@ def build_word_report(examples: Dict[str, Dict[str, Any]]) -> None:
         doc,
         ["Grup Üyesi", "Ad Soyad", "Öğrenci Numarası", "Sorumlu Olduğu Bölümler"],
         [
-            ["1. Üye", "Eren Aksoy", "[Öğrenci No]", "Veri Ön İşleme, 1. Yöntem (VADER - TR & EN), 2. Yöntem (BERT/BERTurk)"],
-            ["2. Üye", "[2. Grup Üyesi Ad Soyad]", "[Öğrenci No]", "3. Yöntem (LLM - EVREN API), Sınıf Bazlı Hata Analizi ve Akademik Değerlendirme"],
+            ["1. Üye", "Eren Aksoy", "202403011009", "Veri Ön İşleme, 1. Yöntem (VADER - TR & EN), 2. Yöntem (BERT/BERTurk)"],
+            ["2. Üye", "Emre Kayıkcı", "202403011068", "3. Yöntem (LLM - EVREN API), Sınıf Bazlı Hata Analizi ve Akademik Değerlendirme"],
         ],
     )
 
