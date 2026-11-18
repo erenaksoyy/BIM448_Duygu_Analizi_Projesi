@@ -412,6 +412,15 @@ def build_word_report(examples: Dict[str, Dict[str, Any]]) -> None:
     subtitle_run.font.size = Pt(14)
     subtitle_run.font.color.rgb = RGBColor(30, 58, 138)
 
+    add_formatted_table(
+        doc,
+        ["Grup Üyesi", "Ad Soyad", "Öğrenci Numarası", "Sorumlu Olduğu Bölümler"],
+        [
+            ["1. Üye", "Eren Aksoy", "[Öğrenci No]", "Veri Ön İşleme, 1. Yöntem (VADER - TR & EN), 2. Yöntem (BERT/BERTurk)"],
+            ["2. Üye", "[2. Grup Üyesi Ad Soyad]", "[Öğrenci No]", "3. Yöntem (LLM - EVREN API), Sınıf Bazlı Hata Analizi ve Akademik Değerlendirme"],
+        ],
+    )
+
     doc.add_heading("1. Projenin Amacı ve Kapsamı", level=1)
     doc.add_paragraph(
         "Bu çalışmanın amacı; kural ve sözlük tabanlı geleneksel duygu analizi yaklaşımı (VADER), "
@@ -594,6 +603,24 @@ def build_word_report(examples: Dict[str, Dict[str, Any]]) -> None:
         f"• Veri Setinden Gerçek Örnek 3 (Türkçe - Gerçek Sınıf: Neutral [3 Yıldız] | Mekan: {ex_tr_neu['place_name']}):\n"
         f"  Orijinal Yorum: \"{ex_tr_neu['text']}\"\n"
         f"  Model Tahminleri -> VADER: {ex_tr_neu['vader_pred']} [HATALI] | BERTurk: {ex_tr_neu['bert_pred']} [HATALI] | LLM: {ex_tr_neu['llm_pred']} [DOĞRU]"
+    )
+
+    doc.add_heading("6. Genel Sonuç, Yöntemsel Karşılaştırma ve Kaynakça", level=1)
+    doc.add_paragraph(
+        "18.000 gerçek kullanıcı yorumu (9.000 İngilizce + 9.000 Türkçe) üzerinde yürütülen bu kapsamlı çalışmada:\n"
+        "1) Kural tabanlı VADER yaklaşımının çok hızlı (9.000 yorumda ~1.2 sn) olmasına karşın bağlamı kavrayamadığı, "
+        "Nötr sınıfında %89-%97 hata yaptığı ve Türkçe metinlerde mutlaka çeviri aşamasına ihtiyaç duyduğu (çevirisiz %35,37 -> çevirili %53,99) kanıtlanmıştır.\n"
+        "2) Derin öğrenme tabanlı 3 sınıflı BERT (%80,96) ve BERTurk (%72,11) modellerinin çift yönlü dikkat mekanizması sayesinde "
+        "zıt kutuplu hataları (Pozitif <-> Negatif) neredeyse sıfırladığı ve Nötr sınıfı başarımını dramatik biçimde artırdığı görülmüştür.\n"
+        "3) Güncel Büyük Dil Modeli (EVREN Qwen3.8-Flash-Next) yaklaşımının ise sıfır-örnek (zero-shot) yapılandırılmış istem mühendisliğiyle "
+        "hem İngilizcede (%83,63 doğruluk, 1.473 hata) hem de Türkçede (%79,11 doğruluk, 1.880 hata) en yüksek doğruluğa ve en düşük toplam hata sayısına ulaştığı tespit edilmiştir.\n\n"
+        "Kaynaklar ve Erişim Bağlantıları:\n"
+        "• Türkçe Veri Seti: Hugging Face - opdullah/turkish-google-maps-reviews\n"
+        "• İngilizce Veri Seti: Hugging Face - jaimik69/Yelp-Restaurant-Dataset & hasnat79/yelp_food_business_review_dataset_2M\n"
+        "• İngilizce BERT Modeli: Hugging Face - gohbwj/sentiment-fine-tuned-yelp-3L\n"
+        "• Türkçe BERTurk Modeli: Hugging Face - incidelen/bert-base-turkish-sentiment-analysis-cased (dbmdz/bert-base-turkish-cased)\n"
+        "• LLM Çıkarım Altyapısı: EVREN Milli Yapay Zeka Platformu API (https://evren-llmapi.ssyz.org.tr/v1 - qwen3.8-flash-next)\n"
+        "• Proje GitHub Deposu: https://github.com/erenaksoyy/BIM448_Duygu_Analizi_Projesi"
     )
 
     doc.save(REPORT_DOCX_PATH)
