@@ -6,7 +6,8 @@ Bu modül, 3 yöntemin (VADER, BERT/BERTurk ve LLM) ürettiği özet metrikleri 
 tahmin sonuçlarını okuyarak:
 1. 300 DPI yüksek çözünürlüklü 4 adet karşılaştırma grafiği (.png) üretir.
 2. Niteliksel hata analizi için veri setinden gerçek yanlış sınıflandırma örneklerini çeker.
-3. Tabloları, grafikleri ve akademik tartışmayı içeren Word raporunu (.docx) oluşturur.
+3. VADER, BERT ve LLM'in kuramsal açıklamalarını, tabloları, grafikleri ve
+   akademik tartışmayı içeren Word raporunu (.docx) oluşturur.
 """
 
 import json
@@ -392,7 +393,7 @@ def add_formatted_table(
 
 
 def build_word_report(examples: Dict[str, Dict[str, Any]]) -> None:
-    """Proje sonuçlarını, tabloları ve grafikleri içeren Word (.docx) raporunu üretir."""
+    """Proje sonuçlarını, kuramsal altyapıyı, tabloları ve grafikleri içeren Word (.docx) raporunu üretir."""
     doc = Document()
 
     title_paragraph = doc.add_paragraph()
@@ -453,41 +454,79 @@ def build_word_report(examples: Dict[str, Dict[str, Any]]) -> None:
         ],
     )
 
-    doc.add_heading("3. Uygulanan Yöntemler, Mimari ve Parametre Detayları", level=1)
-    doc.add_heading("3.1. Yöntem 1: VADER Sentiment Analysis (Kural ve Sözlük Tabanlı Yaklaşım)", level=2)
+    doc.add_heading("3. Uygulanan Yöntemlerin Kuramsal Altyapısı, Mimari ve Parametre Detayları", level=1)
+
+    doc.add_heading("3.1. VADER Nedir ve Nasıl Çalışır? (Kural ve Sözlük Tabanlı Yaklaşım)", level=2)
     doc.add_paragraph(
-        "VADER (Valence Aware Dictionary and sEntiment Reasoner), sosyal medya ve kısa kullanıcı yorumları için geliştirilmiş "
-        "sözlük ve kural tabanlı bir duygu analizi aracıdır. Kelimelerin duygu kutupluluğunu (valence), büyük harf kullanımını, "
-        "ünlem işaretlerini, derece zarflarını ('very', 'extremely') ve bağlaçları ('but') değerlendirerek -1.0 ile +1.0 arasında "
-        "bileşik (compound) bir skor üretir.\n"
-        "• Sınıflandırma Eşik Değerleri (Thresholds): compound >= 0.05 ise 'Positive', compound <= -0.05 ise 'Negative', "
-        "-0.05 < compound < 0.05 aralığında ise 'Neutral' olarak etiketlenmiştir.\n"
-        "• Türkçe Uygulama Mimarisi: VADER sözlüğü yalnızca İngilizce kelimeleri içerdiğinden, Türkçe veri setindeki 9.000 yorum "
-        "Google Translate API tabanlı toplu çeviri mekanizması ile İngilizceye çevrilmiş ('translated_text' sütunu) ve VADER bu çeviriler "
-        "üzerinde çalıştırılmıştır. Ayrıca çevirinin etkisini kanıtlamak amacıyla ham Türkçe metinler üzerinde de VADER çalıştırılıp karşılaştırılmıştır."
+        "VADER (Valence Aware Dictionary and sEntiment Reasoner; Hutto & Gilbert, 2014), özellikle sosyal medya metinleri, "
+        "mikro-bloglar ve müşteri yorumları için geliştirilmiş sözlük (lexicon) ve kural tabanlı bir duygu analizi modelidir. "
+        "Herhangi bir makine öğrenmesi eğitimi gerektirmez; bunun yerine insan uzmanlar tarafından etiketlenmiş 7.500'den fazla "
+        "İngilizce kelime, kısaltma ('lol', 'wtf'), argo ifade ve emoji/emoticon (':)', '🙂') içeren bir duygu sözlüğüne dayanır.\n"
+        "• Çalışma Prensibi ve 5 Dilbilimsel Sezgisel Kural (Heuristics): Sözlükteki her ifadenin -4.0 (aşırı negatif) ile "
+        "+4.0 (aşırı pozitif) arasında bir duygu şiddeti (valence) skoru vardır. VADER, cümledeki kelimelerin ham skorlarını "
+        "topladıktan sonra 5 dilbilimsel kural uygular:\n"
+        "  1) Noktalama İşaretleri: Ünlem işareti ('!') duygu yönünü değiştirmeden şiddetini artırır (örn. 'Good!!!' > 'Good').\n"
+        "  2) Büyük Harf Vurgusu (ALL-CAPS): Tamamı büyük harfle yazılan kelimelerin ('GREAT', 'TERRIBLE') duygu şiddeti artırılır.\n"
+        "  3) Derece Zarfları (Degree Modifiers / Booster Words): 'very', 'extremely', 'absolutely' gibi zarflar kendisinden sonra "
+        "gelen kelimenin duygu skorunu yükseltirken, 'kind of', 'slightly' gibi zarflar düşürür.\n"
+        "  4) Karşıtlık Bağlaçları ('but'): Cümlede 'but' bağlacı geçtiğinde, bağlaçtan önceki kelimelerin ağırlığı %50 azaltılırken "
+        "bağlaçtan sonraki kelimelerin ağırlığı %50 artırılır.\n"
+        "  5) Olumsuzluk Penceresi (Negation Tri-gram): Duygu kelimesinden önceki 3 kelimelik pencerede 'not', 'never', 'isn't' gibi "
+        "olumsuzluk ifadeleri varsa duygu kutbu tersine çevrilir (skora -0.74 çarpanı uygulanır).\n"
+        "• Bileşik Skor (Compound Score) ve Eşik Değerleri: Cümledeki tüm kelimelerin ağırlıklı toplamı x olmak üzere, "
+        "compound = x / sqrt(x^2 + alpha) (alpha=15) formülüyle -1.0 ile +1.0 arasına normalize edilir. Literatürdeki standart "
+        "eşiklere göre compound >= 0.05 ise 'Positive', compound <= -0.05 ise 'Negative', -0.05 < compound < 0.05 ise 'Neutral' atanır.\n"
+        "• Türkçe Uygulama Mimarisi: VADER sözlüğü yalnızca İngilizce kelimeleri tanıdığı için Türkçe veri setindeki 9.000 yorum "
+        "Google Translate API tabanlı toplu çeviri mekanizmasıyla İngilizceye çevrilmiş ('translated_text') ve VADER bu çeviriler "
+        "üzerinde çalıştırılmıştır. Çevirinin zorunluluğunu göstermek için çevirisiz ham Türkçe metinler üzerinde de kontrol deneyi yapılmıştır."
     )
 
-    doc.add_heading("3.2. Yöntem 2: BERT ve BERTurk Tabanlı Duygu Analizi (Derin Öğrenme Yaklaşımı)", level=2)
+    doc.add_heading("3.2. BERT ve BERTurk Nedir ve Nasıl Çalışır? (Derin Öğrenme Yaklaşımı)", level=2)
     doc.add_paragraph(
-        "BERT (Bidirectional Encoder Representations from Transformers), metni hem soldan sağa hem de sağdan sola çift yönlü "
-        "öz-dikkat (bidirectional self-attention) mekanizmasıyla kodlayarak kelimelerin cümle içindeki bağlamsal anlamını yakalayan "
-        "derin öğrenme mimarisidir. Standart 2 sınıflı (SST-2 veya savasy/bert-base-turkish) modeller 'Neutral' sınıfını tahmin edemediği için "
-        "bu projede doğrudan 3 sınıflı (Positive, Neutral, Negative) olarak fine-tune edilmiş modeller seçilmiştir:\n"
-        "• İngilizce BERT Modeli: 'gohbwj/sentiment-fine-tuned-yelp-3L' (Yelp restoran yorumları üzerinde 3 sınıflı olarak ince ayar yapılmış "
-        "12 katmanlı, 768 gizli boyutlu, 12 dikkat başlıklı Transformer modeli; max_length=512, batch_size=64).\n"
-        "• Türkçe BERTurk Modeli: 'incidelen/bert-base-turkish-sentiment-analysis-cased' (MDZ Digital Library ekibinin 35 GB Türkçe derlem "
-        "üzerinde eğittiği 'dbmdz/bert-base-turkish-cased' BERTurk mimarisi üzerine 3 sınıflı olarak fine-tune edilmiş model; 12 katman, "
-        "110M parametre, max_length=512, batch_size=64). Her iki model Google Colab NVIDIA L4 GPU üzerinde çalıştırılmıştır."
+        "BERT (Bidirectional Encoder Representations from Transformers; Devlin et al., 2019), Google tarafından geliştirilen ve "
+        "Doğal Dil İşleme (NLP) alanında devrim yaratan, Transformer mimarisinin yalnızca Kodlayıcı (Encoder) katmanlarına dayalı "
+        "derin öğrenme modelidir.\n"
+        "• Çift Yönlü Öz-Dikkat (Bidirectional Multi-Head Self-Attention) Mimarisi: Geleneksel dil modelleri metni yalnızca soldan sağa "
+        "veya sağdan sola okurken, BERT cümledeki tüm kelimeleri aynı anda (paralel olarak) işler. Öz-dikkat (Self-Attention) mekanizması "
+        "sayesinde bir kelimenin cümle içindeki bağlamsal anlamı, hem solundaki hem de sağındaki tüm kelimelerle olan anlamsal "
+        "etkileşim ağırlıklarından hesaplanır. Böylece aynı kelimenin farklı bağlamlardaki zıt anlamları ve bağlaçlar ('fakat', 'ancak') "
+        "sonrası değişen duygu durumu yüksek doğrulukla temsil edilir.\n"
+        "• Ön-Eğitim (Pre-training) ve İnce Ayar (Fine-tuning): BERT, milyarlarca kelimelik etiketlenmemiş metin üzerinde iki görevle "
+        "ön-eğitime tabi tutulur: (1) Cümledeki kelimelerin %15'ini maskeleyip bağlamdan tahmin etme (Masked Language Modeling - MLM) "
+        "ve (2) İki cümlenin birbirinin devamı olup olmadığını tahmin etme (Next Sentence Prediction - NSP). Duygu analizi için "
+        "ince ayar (fine-tuning) aşamasında ise cümlenin başına eklenen özel '[CLS]' (Classification) tokenının son Transformer "
+        "katmanındaki 768 boyutlu temsili, doğrusal bir sınıflandırma katmanından (Linear + Softmax) geçirilerek Pozitif, Nötr ve "
+        "Negatif sınıf olasılıklarını üretir.\n"
+        "• BERTurk Nedir?: Türkçe sondan eklemeli (agglutinative) ve zengin morfolojiye sahip bir dildir (örn. 'güzelleştiremediklerimizden'). "
+        "MDZ Digital Library ekibi tarafından geliştirilen BERTurk ('dbmdz/bert-base-turkish-cased'), 35 GB boyutunda ve 440 milyon "
+        "kelimelik Türkçe derlem üzerinde eğitilmiştir. WordPiece alt-kelime (subword) tokenizasyonu sayesinde Türkçe kelime köklerini "
+        "ve olumsuzluk/çekim eklerini ('-me', '-ma', '-sız') parçalarına ayırarak anlamsal kaybı önler.\n"
+        "• Projedeki Model ve Parametre Seçimi: Standart 2 sınıflı modeller (SST-2 veya savasy/bert-base-turkish) 'Neutral' sınıfını "
+        "tahmin edemediği için bu projede doğrudan 3 sınıflı (Positive, Neutral, Negative) olarak fine-tune edilmiş modeller seçilmiştir:\n"
+        "  - İngilizce Model: 'gohbwj/sentiment-fine-tuned-yelp-3L' (12 katman, 768 gizli boyut, 12 dikkat başlığı, max_length=512, batch_size=64).\n"
+        "  - Türkçe Model: 'incidelen/bert-base-turkish-sentiment-analysis-cased' (BERTurk 'dbmdz/bert-base-turkish-cased' tabanlı 3 sınıflı model, "
+        "12 katman, 110M parametre, max_length=512, batch_size=64). Her iki model Google Colab NVIDIA L4 GPU üzerinde çalıştırılmıştır."
     )
 
-    doc.add_heading("3.3. Yöntem 3: Büyük Dil Modeli (LLM) Tabanlı Duygu Analizi (EVREN API)", level=2)
+    doc.add_heading("3.3. Büyük Dil Modeli (LLM) Nedir ve Nasıl Çalışır? (İstem Mühendisliği Yaklaşımı)", level=2)
     doc.add_paragraph(
-        "Üçüncü yöntem olarak T.C. Cumhurbaşkanlığı Savunma Sanayii Başkanlığı (SSB) ve SAYZEK koordinesinde geliştirilen "
-        "yerli yapay zekâ platformu EVREN (https://evren-llmapi.ssyz.org.tr/v1) üzerindeki 'qwen3.8-flash-next' (ve yedek olarak 'gemma-4-31b') "
-        "Büyük Dil Modeli kullanılmıştır.\n"
-        "• İstem Mühendisliği (Prompt Engineering) ve Parametreler: Sıcaklık parametresi deterministik çıktı için temperature=0.0 olarak "
-        "sabitlenmiş, akıl yürütme gecikmesini önlemek için enable_thinking=False ayarlanmış ve her API çağrısında 50 numaralı restoran yorumu "
-        "verilerek modelden yalnızca 50 elemanlı geçerli bir JSON dizisi (['Positive', 'Neutral', 'Negative']) döndürmesi istenmiştir."
+        "Büyük Dil Modelleri (Large Language Models - LLM), milyarlarca (veya yüz milyarlarca) parametreye sahip, Transformer mimarisinin "
+        "Çözücü (Decoder-only Autoregressive) yapısına dayanan ve trilyonlarca kelimelik çok dilli veri kümeleri üzerinde eğitilen "
+        "üretken yapay zekâ modelleridir (Örn. GPT-4, Qwen, Gemma, Llama, DeepSeek).\n"
+        "• LLM Nasıl Çalışır? (Ön-Eğitim, Instruction Tuning ve RLHF): LLM'ler ilk aşamada kendinden önceki kelimelere bakarak "
+        "bir sonraki tokenı tahmin etme (Next-Token Prediction) göreviyle eğitilir. Bu süreçte yalnızca dilbilgisini değil; dünya bilgisini, "
+        "kültürel deyimleri, ironiyi ve mantıksal çıkarım kurallarını öğrenirler. Ardından Yönerge İnce Ayarı (Instruction Tuning) ve "
+        "İnsan Geri Bildirimiyle Pekiştirmeli Öğrenme (RLHF) aşamalarından geçerek insan komutlarını (prompt) doğrudan takip etme "
+        "yeteneği kazanırlar.\n"
+        "• Duygu Analizinde VADER ve BERT'ten Farkı: VADER sabit kelime skorlarına, BERT ise 512 tokenlık yerel sınıflandırma katmanına "
+        "bağlıdır ve BERT'in başarılı olması için o alanda etiketli veriyle yeniden eğitilmesi (fine-tuning) gerekir. Oysa LLM'ler "
+        "Bağlam İçi Öğrenme (In-Context / Zero-Shot Learning) yeteneği sayesinde hiçbir ek eğitim yapılmadan yalnızca doğal dilde "
+        "verilen bir istemle (Prompt Engineering) duygu analizi yapabilir. Cümledeki ince alaycılığı (sarcasm), devrik Türkçe ifadeleri "
+        "ve 'lezzet iyi ama porsiyon küçük, fiyatına göre normal' gibi çok boyutlu gri (Nötr) yorumları insan düzeyinde muhakeme eder.\n"
+        "• Projedeki EVREN Altyapısı ve Parametreler: Bu çalışmada T.C. Cumhurbaşkanlığı Savunma Sanayii Başkanlığı (SSB) ve SAYZEK "
+        "koordinesinde geliştirilen milli yapay zekâ platformu EVREN (https://evren-llmapi.ssyz.org.tr/v1) üzerindeki 'qwen3.8-flash-next' "
+        "(ve yedek olarak 'gemma-4-31b') modeli kullanılmıştır. Tekrarlanabilir deterministik çıktı için temperature=0.0, hızlı çıkarım "
+        "için enable_thinking=False ve her API çağrısında 50 yorumluk yapılandırılmış JSON dizi istemi (batch_size=50, 8 paralel iş parçacığı) uygulanmıştır."
     )
 
     doc.add_heading("4. Deneysel Sonuçlar ve Sınıf Bazlı Hatalı Tahmin Analizi", level=1)
@@ -615,10 +654,13 @@ def build_word_report(examples: Dict[str, Dict[str, Any]]) -> None:
         "3) Güncel Büyük Dil Modeli (EVREN Qwen3.8-Flash-Next) yaklaşımının ise sıfır-örnek (zero-shot) yapılandırılmış istem mühendisliğiyle "
         "hem İngilizcede (%83,63 doğruluk, 1.473 hata) hem de Türkçede (%79,11 doğruluk, 1.880 hata) en yüksek doğruluğa ve en düşük toplam hata sayısına ulaştığı tespit edilmiştir.\n\n"
         "Kaynaklar ve Erişim Bağlantıları:\n"
+        "• Hutto, C. J., & Gilbert, E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. ICWSM.\n"
+        "• Devlin, J., Chang, M. W., Lee, K., & Toutanova, K. (2019). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. NAACL.\n"
+        "• Schweter, S. (2020). BERTurk - BERT models for Turkish (dbmdz/bert-base-turkish-cased).\n"
         "• Türkçe Veri Seti: Hugging Face - opdullah/turkish-google-maps-reviews\n"
         "• İngilizce Veri Seti: Hugging Face - jaimik69/Yelp-Restaurant-Dataset & hasnat79/yelp_food_business_review_dataset_2M\n"
         "• İngilizce BERT Modeli: Hugging Face - gohbwj/sentiment-fine-tuned-yelp-3L\n"
-        "• Türkçe BERTurk Modeli: Hugging Face - incidelen/bert-base-turkish-sentiment-analysis-cased (dbmdz/bert-base-turkish-cased)\n"
+        "• Türkçe BERTurk Modeli: Hugging Face - incidelen/bert-base-turkish-sentiment-analysis-cased\n"
         "• LLM Çıkarım Altyapısı: EVREN Milli Yapay Zeka Platformu API (https://evren-llmapi.ssyz.org.tr/v1 - qwen3.8-flash-next)\n"
         "• Proje GitHub Deposu: https://github.com/erenaksoyy/BIM448_Duygu_Analizi_Projesi"
     )
