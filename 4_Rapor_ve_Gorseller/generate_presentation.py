@@ -208,7 +208,7 @@ def build_presentation() -> None:
     tf1.word_wrap = True
 
     p_uni = tf1.paragraphs[0]
-    p_uni.text = "DOĞUŞ ÜNİVERSİTESİ • BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ\nBİM448 VERİ MADENCİLİĞİ VE BİLGİ KEŞFİ DERSİ PROJE SUNUMU"
+    p_uni.text = "DOĞUŞ ÜNİVERSİTESİ • YAZILIM MÜHENDİSLİĞİ BÖLÜMÜ\nVERİ MADENCİLİĞİ VE BİLGİ KEŞFİ DERSİ PROJE SUNUMU"
     p_uni.font.size = Pt(16)
     p_uni.font.bold = True
     p_uni.font.color.rgb = RGBColor(147, 197, 253)

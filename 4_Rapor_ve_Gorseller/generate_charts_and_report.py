@@ -399,8 +399,8 @@ def build_word_report(examples: Dict[str, Dict[str, Any]]) -> None:
     title_paragraph = doc.add_paragraph()
     title_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
     header_run = title_paragraph.add_run(
-        "DOĞUŞ ÜNİVERSİTESİ\nMÜHENDİSLİK FAKÜLTESİ - BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ\n"
-        "BİM448 VERİ MADENCİLİĞİ VE BİLGİ KEŞFİ DERSİ PROJE RAPORU\n\n"
+        "DOĞUŞ ÜNİVERSİTESİ\nMÜHENDİSLİK FAKÜLTESİ - YAZILIM MÜHENDİSLİĞİ BÖLÜMÜ\n"
+        "VERİ MADENCİLİĞİ VE BİLGİ KEŞFİ DERSİ PROJE RAPORU\n\n"
     )
     header_run.bold = True
     header_run.font.size = Pt(13)
